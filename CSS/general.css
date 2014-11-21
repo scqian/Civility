@@ -1,0 +1,96 @@
+.background {
+    position: relative;
+}
+
+.left {
+    position: absolute;
+    top: 64px;
+    left: 2px;
+}
+
+.right {
+    position: absolute;
+    top: 64px;
+    left: 129px;
+}
+
+.bars_container {
+    position: absolute;
+    top: 50px;
+    left: 27px;
+
+}
+
+.bar1 {
+    height: 15px;
+    width: 50px;
+    background-color: #66CD00;
+    position: absolute;
+}
+
+.bar2 {
+    height: 15px;
+    width: 100px;
+    background-color: #78AB46;
+    position: absolute;
+    top: 25px;
+}
+
+.bar3 {
+    height: 15px;
+    width: 80px;
+    background-color: #458B00;
+    position: absolute;
+    top: 50px;
+}
+
+.bar4 {
+    height: 15px;
+    width: 90px;
+    background-color: #4A7023;
+    position: absolute;
+    top: 75px;
+}
+
+.bar_descrip {
+    font-size: 10px;
+    margin: 0px;
+    float: left;
+    position: absolute;
+}
+
+.bar_val {
+    font-size: 10px;
+    margin: 0px;
+    float: right;
+    position: absolute;
+}
+
+.bar1 .bar_val {
+    left: 30px;
+}
+
+.bar2 .bar_val {
+    left: 43px;
+}
+
+.bar3 .bar_val {
+    left: 48px;
+}
+
+.bar4 .bar_val {
+    left: 34px;
+}
+
+
+
+#count_container {
+    font-size: 28px;
+    position: absolute;
+    top: 23px;
+    left: 65px;
+}
+
+#count {
+    color: #4A7023;
+}
