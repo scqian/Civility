@@ -6,11 +6,12 @@
 <head>
     <title>Civility Volume</title>
     <link rel="stylesheet" type="text/css" href="CSS/general.css">
+    <script src='https://cdn.firebase.com/js/client/1.1.1/firebase.js'></script>
+    <script src='https://ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js'></script>
 </head>
 <body>
     <div class="background">
-        <img src="Images/warning_volume.png">
-
+        <img src="Images/warning_volume.png" id="main_image">
         <div class="bars_container">
             <div class="bar1"><p class="bar_descrip">Today: </p><p class="bar_val">5</p></div>
             <div class="bar2"><p class="bar_descrip">Yesterday: </p><p class="bar_val">10</p></div>
@@ -20,5 +21,38 @@
 
         <a href="speed.html" class="right"><img src="Images/r_arrow.png"></a>
         <a href="index.html" class="left"><img src="Images/l_arrow.png"></a>
+        <button id="test">test</button>
     </div>
+    <div id="pop_up_cont">
+        <img src="Images/volume_pop_up.png" id="volume_p">
+        <img src="Images/wpm_pop_up.png" id="speed_p">
+        <button id="exit"></button>
+    </div>
+    <script>
+        var fb_ref = new Firebase('https://blistering-fire-8006.firebaseio.com/');
+        var test_button = document.getElementById('test');
+        var vol_pop = document.getElementById('volume_p');
+        var speed_pop = document.getElementById('speed_p');
+        var ex = document.getElementById('exit');
+        ex.onclick=function() {
+            pop_up_cont.style.display = 'none';
+            vol_pop.style.display = 'none';
+            speed_pop.style.display = 'none';
+        }
+        test_button.onclick=function(){
+            fb_ref.set({name:'click', text:'click'});
+        };
+        fb_ref.on('child_added', function(snapshot) {
+            if (snapshot.val() =='v') {
+                speed_pop.style.display = 'none';
+                pop_up_cont.style.display = 'block';
+                vol_pop.style.display = 'block';
+            }
+            if (snapshot.val() == 's') {
+                vol_pop.style.display = 'none';
+                pop_up_cont.style.display = 'block';
+                speed_pop.style.display = 'block';
+            }
+        });
+    </script>
 </body> 

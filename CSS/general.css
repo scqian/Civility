@@ -2,6 +2,10 @@
     position: relative;
 }
 
+.main_image {
+    position: relative;
+}
+
 .left {
     position: absolute;
     top: 64px;
@@ -15,6 +19,7 @@
 }
 
 .bars_container {
+    z-index: 0;
     position: absolute;
     top: 50px;
     left: 27px;
@@ -93,4 +98,33 @@
 
 #count {
     color: #4A7023;
+}
+
+
+#volume_p {
+    position: relative;
+    display: none;
+}
+#speed_p {
+    position: relative;
+    display: none;
+}
+
+#pop_up_cont {
+    display: none;
+    position: relative;
+    top: -172px;
+}
+
+#exit {
+    -webkit-appearance: none;
+    height: 19px;
+    width: 16px;
+    position: relative;
+    top: -143px;
+    left: 123px;
+    background-color: transparent;
+    color:none;
+    border: none;
+    cursor: pointer;
 }
