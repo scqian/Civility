@@ -11,19 +11,18 @@
 </head>
 <body>
     <div class="background">
-        <img src="Images/warning_total.png">
-
-        <div class="bars_container">
-            <div class="bar1"><p class="bar_descrip">9/20: </p><p class="bar_val">5</p></div>
-            <div class="bar2"><p class="bar_descrip">9/19: </p><p class="bar_val">10</p></div>
-            <div class="bar3"><p class="bar_descrip">9/18: </p><p class="bar_val">8</p></div>
-            <div class="bar4"><p class="bar_descrip">9/17: </p><p class="bar_val">9</p></div>
+        <img src="Images/warning_home.png">
+        <div id="count_container">
+            <p id="count">0</p>
         </div>
 
-        <a href="main.html" class="right"><img src="Images/r_arrow.png"></a>
-        <a href="speed.html" class="left"><img src="Images/l_arrow.png"></a>
+        <a href="volume.html" class="right"><img src="Images/r_arrow.png"></a>
+        <a href="total.html" class="left"><img src="Images/l_arrow.png"></a>
+        <a href="settings.html" id="settings_button"><img src ="Images/settings_button.png"></a>
+        <a href="paused.html"><button id="pause_button"></button></a>
         <button id="test">test v</button>
         <button id="test2">test s</button>
+        <button id="increment_count">count+</button>
     </div>
      <div id="pop_up_cont">
         <img src="Images/volume_pop_up.png" id="volume_p">
@@ -32,12 +31,33 @@
     </div>
     <script>
         var fb_ref = new Firebase('https://blistering-fire-8006.firebaseio.com/');
+        var data = new Firebase('https://data-storage.firebaseio.com/');
         fb_ref.onDisconnect().remove();
+        var count = document.getElementById('count');
+        var count_button = document.getElementById('increment_count');
         var test_vol_button = document.getElementById('test');
         var test_speed_button = document.getElementById('test2');
         var vol_pop = document.getElementById('volume_p');
         var speed_pop = document.getElementById('speed_p');
         var ex = document.getElementById('exit');
+
+        <!-- load the previous value -->
+        var count_ref = new Firebase('https://data-storage.firebaseio.com/count');
+        count_ref.on('value', function(snapshot) {
+            if (snapshot.val() != null) {
+                var update_val = snapshot.val().value;
+                if (update_val != null) {
+                    count.innerHTML = update_val;
+                }
+            }
+        });
+
+        count_button.onclick=function() {
+            var new_val = parseInt(count.innerHTML) + 1;
+            count.innerHTML = new_val;
+            console.log(new_val);
+            count_ref.set({value: new_val});
+        }
         ex.onclick=function() {
             pop_up_cont.style.display = 'none';
             vol_pop.style.display = 'none';

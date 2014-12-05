@@ -20,8 +20,9 @@
         </div>
 
         <a href="speed.html" class="right"><img src="Images/r_arrow.png"></a>
-        <a href="index.html" class="left"><img src="Images/l_arrow.png"></a>
-        <button id="test">test</button>
+        <a href="main.html" class="left"><img src="Images/l_arrow.png"></a>
+        <button id="test">test v</button>
+        <button id="test2">test s</button>
     </div>
     <div id="pop_up_cont">
         <img src="Images/volume_pop_up.png" id="volume_p">
@@ -30,7 +31,9 @@
     </div>
     <script>
         var fb_ref = new Firebase('https://blistering-fire-8006.firebaseio.com/');
-        var test_button = document.getElementById('test');
+        fb_ref.onDisconnect().remove();
+        var test_vol_button = document.getElementById('test');
+        var test_speed_button = document.getElementById('test2');
         var vol_pop = document.getElementById('volume_p');
         var speed_pop = document.getElementById('speed_p');
         var ex = document.getElementById('exit');
@@ -39,16 +42,22 @@
             vol_pop.style.display = 'none';
             speed_pop.style.display = 'none';
         }
-        test_button.onclick=function(){
-            fb_ref.set({name:'click', text:'click'});
+        var counter = 0;
+        test_vol_button.onclick=function(){
+            fb_ref.push({name:'v'+counter, value:'v'});
+            counter += 1;
+        };
+        test_speed_button.onclick=function(){
+            fb_ref.push({name:'s'+counter, value:'s'});
+            counter += 1;
         };
         fb_ref.on('child_added', function(snapshot) {
-            if (snapshot.val() =='v') {
+            if (snapshot.val().value =='v') {
                 speed_pop.style.display = 'none';
                 pop_up_cont.style.display = 'block';
                 vol_pop.style.display = 'block';
             }
-            if (snapshot.val() == 's') {
+            if (snapshot.val().value == 's') {
                 vol_pop.style.display = 'none';
                 pop_up_cont.style.display = 'block';
                 speed_pop.style.display = 'block';

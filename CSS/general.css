@@ -1,3 +1,45 @@
+#f_print {
+    position: relative;
+    border-radius: 50%;
+    height: 65px;
+    width: 65px;
+    left: -108px;
+    top: -10px;
+    background-color: transparent;
+}
+
+#mic {
+    position: relative;
+    height: 60px;
+    width: 60px;
+    background-color: transparent;
+    left: -106px;
+    top: -19px;
+    border: none;
+}
+
+#correct_name {
+    position: relative;
+    width: 132px;
+    height: 34px;
+    background-color: transparent;
+    left: -142px;
+    top: -50px;
+    border: none;
+}
+
+#wrong_name {
+    position: relative;
+    width: 132px;
+    height: 34px;
+    background-color: transparent;
+    left: -278px;
+    top: -11px;
+    border: none;
+}
+
+
+
 .background {
     position: relative;
 }
@@ -16,6 +58,31 @@
     position: absolute;
     top: 64px;
     left: 129px;
+}
+
+#settings_button {
+    position: relative;
+    left: -34px;
+}
+
+#pause_button {
+    position: relative;
+    height: 29px;
+    width: 29px;
+    left: -182px;
+    top: -4px;
+    background-color: transparent;
+    border: none;
+}
+
+#play_button {
+    position: relative;
+    height: 29px;
+    width: 29px;
+    left: -148px;
+    top: -4px;
+    background-color: transparent;
+    border: none;
 }
 
 .bars_container {
@@ -111,6 +178,7 @@
 }
 
 #pop_up_cont {
+    width: 144px;
     display: none;
     position: relative;
     top: -172px;

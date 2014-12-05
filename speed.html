@@ -6,6 +6,8 @@
 <head>
     <title>Civility Speed</title>
     <link rel="stylesheet" type="text/css" href="CSS/general.css">
+    <script src='https://cdn.firebase.com/js/client/1.1.1/firebase.js'></script>
+    <script src='https://ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js'></script>
 </head>
 <body>
     <div class="background">
@@ -20,5 +22,47 @@
 
         <a href="total.html" class="right"><img src="Images/r_arrow.png"></a>
         <a href="volume.html" class="left"><img src="Images/l_arrow.png"></a>
+        <button id="test">test v</button>
+        <button id="test2">test s</button>
     </div>
+     <div id="pop_up_cont">
+        <img src="Images/volume_pop_up.png" id="volume_p">
+        <img src="Images/wpm_pop_up.png" id="speed_p">
+        <button id="exit"></button>
+    </div>
+    <script>
+        var fb_ref = new Firebase('https://blistering-fire-8006.firebaseio.com/');
+        fb_ref.onDisconnect().remove();
+        var test_vol_button = document.getElementById('test');
+        var test_speed_button = document.getElementById('test2');
+        var vol_pop = document.getElementById('volume_p');
+        var speed_pop = document.getElementById('speed_p');
+        var ex = document.getElementById('exit');
+        ex.onclick=function() {
+            pop_up_cont.style.display = 'none';
+            vol_pop.style.display = 'none';
+            speed_pop.style.display = 'none';
+        }
+        var counter = 0;
+        test_vol_button.onclick=function(){
+            fb_ref.push({name:'v'+counter, value:'v'});
+            counter += 1;
+        };
+        test_speed_button.onclick=function(){
+            fb_ref.push({name:'s'+counter, value:'s'});
+            counter += 1;
+        };
+        fb_ref.on('child_added', function(snapshot) {
+            if (snapshot.val().value =='v') {
+                speed_pop.style.display = 'none';
+                pop_up_cont.style.display = 'block';
+                vol_pop.style.display = 'block';
+            }
+            if (snapshot.val().value == 's') {
+                vol_pop.style.display = 'none';
+                pop_up_cont.style.display = 'block';
+                speed_pop.style.display = 'block';
+            }
+        });
+    </script>
 </body> 
