@@ -330,3 +330,61 @@
     background-color: transparent;
     border: none;
 }
+
+#add_button {
+    position: relative;
+    left: -29px;
+    top: -131px;
+    height: 20px;
+    width: 20px;
+    background-color: transparent;
+    border: none;
+}
+
+#back_button_another {
+    position: relative;
+    left: -417px;
+    top: -153px;
+    height: 18px;
+    background-color: transparent;
+    border: none;
+}
+
+#home_button_another {
+    position: relative;
+    left: -311px;
+    top: -153px;
+    height: 18px;
+    background-color: transparent;
+    border: none;
+}
+
+#word {
+    position: relative;
+    top: -145px;
+    left: 55px;
+}
+
+#curr_words {
+    position: relative;
+    top: -110px;
+    left: 55px;
+}
+
+#temp_back {
+    position: relative;
+    left: -212px;
+    top: -150px;
+}
+
+#name {
+    position: relative;
+    left: 30px;
+    top: -128px;
+}
+
+#name_cont {
+    position: relative;
+    left: 30px;
+    top: -128px;
+}

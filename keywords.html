@@ -11,8 +11,100 @@
 </head>
 <body>
     <div class="background">
-        <img src="Images/words_to_avoid.png">
+        <img src="Images/hard_code_keywords.png">
         <a href="main2.html" class="right"><img src="Images/r_arrow.png"></a>
         <a href="total2.html" class="left"><img src="Images/l_arrow.png"></a>
+        <a href="add_keyword.html"><button id="add_button"></button></a>
+        <button id="test">test v</button>
+        <button id="test2">test s</button>
     </div>
+    <div id="pop_up_cont">
+        <img src="Images/volume_pop_up.png" id="volume_p">
+        <img src="Images/wpm_pop_up.png" id="speed_p">
+        <button id="exit"></button>
+    </div>
+    <script>
+        var fb_ref = new Firebase('https://blistering-fire-8006.firebaseio.com/');
+        var data = new Firebase('https://data-storage.firebaseio.com/');
+        fb_ref.onDisconnect().remove();
+        var count = document.getElementById('count');
+        var count_button = document.getElementById('increment_count');
+        var test_vol_button = document.getElementById('test');
+        var test_speed_button = document.getElementById('test2');
+        var vol_pop = document.getElementById('volume_p');
+        var speed_pop = document.getElementById('speed_p');
+        var ex = document.getElementById('exit');
+
+        <!-- firebase ref -->
+        var count_ref_v = new Firebase('https://data-storage.firebaseio.com/vol_count');
+        var count_ref_s = new Firebase('https://data-storage.firebaseio.com/speed_count');
+        var count_ref_t = new Firebase('https://data-storage.firebaseio.com/total');
+
+        <!-- Set speed count to use -->
+        var speed_warning_num = 0;
+        count_ref_s.on('value', function(snapshot) {
+            if (snapshot.val() != null) {
+                var update_val = snapshot.val().value;
+                if (update_val != null) {
+                    speed_warning_num = update_val;
+                }
+            }
+        });
+
+        <!-- set volume count to use-->
+        var vol_warning_num = 0;
+        count_ref_v.on('value', function(snapshot) {
+            if (snapshot.val() != null) {
+                var update_val = snapshot.val().value;
+                if (update_val != null) {
+                    vol_warning_num = update_val;
+                }
+            }
+        });
+
+
+        <!-- load the previous value -->
+        var count_ref = new Firebase('https://data-storage.firebaseio.com/count');
+        var total_warning_num = 0;
+        count_ref_t.on('value', function(snapshot) {
+            if (snapshot.val() != null) {
+                var update_val = snapshot.val().value;
+                if (update_val != null) {
+                    total_warning_num = update_val;
+                }
+            }
+        });        
+
+        ex.onclick=function() {
+            pop_up_cont.style.display = 'none';
+            vol_pop.style.display = 'none';
+            speed_pop.style.display = 'none';
+        }
+        var counter = 0;
+        test_vol_button.onclick=function(){
+            fb_ref.push({name:'v'+counter, value:'v'});
+            counter += 1;
+            count_ref_v.set({value: vol_warning_num + 1});
+            count_ref_t.set({value: total_warning_num + 1});
+
+        };
+        test_speed_button.onclick=function(){
+            fb_ref.push({name:'s'+counter, value:'s'});
+            counter += 1;
+            count_ref_s.set({value: speed_warning_num + 1});
+            count_ref_t.set({value: total_warning_num + 1});
+        };
+        fb_ref.on('child_added', function(snapshot) {
+            if (snapshot.val().value =='v') {
+                speed_pop.style.display = 'none';
+                pop_up_cont.style.display = 'block';
+                vol_pop.style.display = 'block';
+            }
+            if (snapshot.val().value == 's') {
+                vol_pop.style.display = 'none';
+                pop_up_cont.style.display = 'block';
+                speed_pop.style.display = 'block';
+            }
+        });
+    </script>
 </body> 

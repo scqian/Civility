@@ -14,5 +14,26 @@
         <img src="Images/settings_off.png">
         <a href="change_name.html"><button id="ch_name_button"></button></a>
         <a href="settings.html"><button id="keyword_button"></button></a>
+        <div id="name_cont"></div>
     </div>
+    <script>
+    <!-- data reference -->
+        var count_ref_n = new Firebase('https://data-storage.firebaseio.com/name');
+        var name = "";
+        count_ref_n.on('value', function(snapshot) {
+            if (snapshot.val() != null) {
+                var update_val = snapshot.val().value;
+                if (update_val != null) {
+                    name = update_val;
+                }
+            }
+        });
+        var set_name = function() {
+            setTimeout(function () {
+                document.getElementById('name_cont').innerHTML = name;
+            }, 1500);
+        }
+
+        set_name();
+    </script>
 </body> 

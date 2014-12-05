@@ -6,11 +6,34 @@
 <head>
     <title>Civility Homepage</title>
     <link rel="stylesheet" type="text/css" href="CSS/general.css">
+    <script src='https://cdn.firebase.com/js/client/1.1.1/firebase.js'></script>
+    <script src='https://ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js'></script>
 </head>
 <body>
     <div class="background">
         <img src="Images/sign_up_3.png">
         <a href="main.html"><button id="correct_name"></button></a>
         <a href="sign_up_2.html"><button id="wrong_name"></button></a>
+        <div id="name"></div>
     </div>
+    <script>
+        <!-- data reference -->
+        var count_ref_n = new Firebase('https://data-storage.firebaseio.com/name');
+        var name = "";
+        count_ref_n.on('value', function(snapshot) {
+            if (snapshot.val() != null) {
+                var update_val = snapshot.val().value;
+                if (update_val != null) {
+                    name = update_val;
+                }
+            }
+        });
+        var set_name = function() {
+            setTimeout(function () {
+                document.getElementById('name').innerHTML = name;
+            }, 1500);
+        }
+
+        set_name();
+    </script>
 </body> 
