@@ -90,6 +90,7 @@
     position: absolute;
     top: 50px;
     left: 27px;
+    visibility: hidden;
 
 }
 
@@ -161,6 +162,7 @@
     position: absolute;
     top: 23px;
     left: 65px;
+    visibility: hidden;
 }
 
 #count {
@@ -195,4 +197,136 @@
     color:none;
     border: none;
     cursor: pointer;
+}
+
+#ch_name_button {
+    position: relative;
+    width: 132px;
+    height: 37px;
+    left: -142px;
+    top: -73px;
+    background-color: transparent;
+    border: none;
+}
+
+#keyword_button {
+    position: relative;
+    width: 132px;
+    height: 50px;
+    left: -278px;
+    top: -10px;
+    background-color: transparent;
+    border: none;
+}
+
+#start_keyword_button {
+    position: relative;
+    width: 132px;
+    height: 37px;
+    left: -142px;
+    top: -10px;
+    background-color: transparent;
+    border: none;
+}
+
+#keyword_check_button {
+    position: relative;
+    height: 60px;
+    width: 60px;
+    background-color: transparent;
+    left: -106px;
+    top: -19px;
+    border: none;
+}
+
+#confirm_button {
+    position: relative;
+    width: 132px;
+    height: 32px;
+    top: -46px;
+    left: -142px;
+    background-color: transparent;
+    border: none;
+}
+
+#decline_button {
+    position: relative;
+    width: 132px;
+    height: 32px;
+    top: -10px;
+    left: -278px;
+    background-color: transparent;
+    border: none;
+}
+
+#back_button {
+    position: relative;
+    left: -416px;
+    top: -153px;
+    height: 18px;
+    background-color: transparent;
+    border: none;
+}
+
+#home_button {
+    position: relative;
+    left: -312px;
+    top: -153px;
+    height: 18px;
+    background-color: transparent;
+    border: none;
+}
+
+#back_button_intro {
+    position: relative;
+    left: -279px;
+    top: -153px;
+    height: 18px;
+    background-color: transparent;
+    border: none;
+}
+
+#home_button_intro {
+    position: relative;
+    left: -174px;
+    top: -153px;
+    height: 18px;
+    background-color: transparent;
+    border: none;
+}
+
+#back_button_add {
+    position: relative;
+    left: -207px;
+    top: -153px;
+    height: 18px;
+    background-color: transparent;
+    border: none;
+}
+
+#home_button_add {
+    position: relative;
+    left: -102px;
+    top: -153px;
+    height: 18px;
+    background-color: transparent;
+    border: none;
+}
+
+#back_button_check {
+    position: relative;
+    left: -417px;
+    top: -153px;
+    height: 18px;
+    background-color: transparent;
+    border: none;
+}
+
+#home_button_check {
+    position: relative;
+    left: -311px;
+    top: -153px;
+    height: 18px;
+    background-color: transparent;
+    border: none;
 }

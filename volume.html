@@ -12,11 +12,11 @@
 <body>
     <div class="background">
         <img src="Images/warning_volume.png" id="main_image">
-        <div class="bars_container">
-            <div class="bar1"><p class="bar_descrip">Today: </p><p class="bar_val">5</p></div>
-            <div class="bar2"><p class="bar_descrip">Yesterday: </p><p class="bar_val">10</p></div>
-            <div class="bar3"><p class="bar_descrip">Last Week: </p><p class="bar_val">8</p></div>
-            <div class="bar4"><p class="bar_descrip">Overall: </p><p class="bar_val">9</p></div>
+        <div class="bars_container" id="b_cont">
+            <div class="bar1" id="b1"><p class="bar_descrip">Today: </p><p class="bar_val" id="v_bar1">0</p></div>
+            <div class="bar2" id="b2"><p class="bar_descrip">Yesterday: </p><p class="bar_val" id="v_bar2">10</p></div>
+            <div class="bar3" id="b3"><p class="bar_descrip">Last Week: </p><p class="bar_val" id="v_bar3">9</p></div>
+            <div class="bar4" id="b4"><p class="bar_descrip">Overall: </p><p class="bar_val" id="v_bar4">7</p></div>
         </div>
 
         <a href="speed.html" class="right"><img src="Images/r_arrow.png"></a>
@@ -37,6 +37,85 @@
         var vol_pop = document.getElementById('volume_p');
         var speed_pop = document.getElementById('speed_p');
         var ex = document.getElementById('exit');
+        <!-- rounding function -->
+        function toInt(n){ return Math.round(Number(n)); };
+
+        <!-- starts bars at zero -->
+        document.getElementById('b1').style.width = ('0px');
+        document.getElementById('b2').style.width = ('0px');
+        document.getElementById('b3').style.width = ('0px');
+        document.getElementById('b4').style.width = ('0px');
+
+        <!-- Update bar value -->
+        var count_ref_v = new Firebase('https://data-storage.firebaseio.com/vol_count');
+        var count_ref_s = new Firebase('https://data-storage.firebaseio.com/speed_count');
+        var count_ref_t = new Firebase('https://data-storage.firebaseio.com/total');
+        count_ref_v.on('value', function(snapshot) {
+            if (snapshot.val() != null) {
+                var update_val = snapshot.val().value;
+                if (update_val != null) {
+                    document.getElementById('v_bar1').innerHTML = update_val;
+                }
+            }
+        });
+
+        <!-- set speed count to use-->
+        var speed_warning_num = 0;
+        count_ref_s.on('value', function(snapshot) {
+            if (snapshot.val() != null) {
+                var update_val = snapshot.val().value;
+                if (update_val != null) {
+                    speed_warning_num = update_val;
+                }
+            }
+        });
+
+        <!-- set total count to use -->
+        var total_warning_num = 0;
+        count_ref_t.on('value', function(snapshot) {
+            if (snapshot.val() != null) {
+                var update_val = snapshot.val().value;
+                if (update_val != null) {
+                    total_warning_num = update_val;
+                }
+            }
+        });
+
+
+        var update_bar_lengths = function() {
+             setTimeout(function () {
+              
+            <!-- get bar lengths -->
+            var max_bar_length = 250;
+            var bar1_v = parseInt(document.getElementById('v_bar1').innerHTML);
+            var bar2_v = parseInt(document.getElementById('v_bar2').innerHTML);
+            var bar3_v = parseInt(document.getElementById('v_bar3').innerHTML);
+            var bar4_v = parseInt(document.getElementById('v_bar4').innerHTML);
+            var total = bar1_v + bar2_v + bar3_v + bar4_v;
+
+            <!-- calculated lengths -->
+            var bar1_l = toInt(bar1_v/total*max_bar_length);
+            var bar2_l = toInt(bar2_v/total*max_bar_length);
+            var bar3_l = toInt(bar3_v/total*max_bar_length);
+            var bar4_l = toInt(bar4_v/total*max_bar_length);
+            if (bar1_l < 40) bar1_l = 40;
+            if (bar2_l < 40) bar2_l = 40;
+            if (bar3_l < 40) bar3_l = 40;
+            if (bar4_l < 40) bar4_l = 40;
+
+
+            <!-- set bar lengths -->
+            document.getElementById('b1').style.width = (bar1_l.toString() + 'px');
+            document.getElementById('b2').style.width = (bar2_l.toString() + 'px');
+            document.getElementById('b3').style.width = (bar3_l.toString() + 'px');
+            document.getElementById('b4').style.width = (bar4_l.toString() + 'px');
+
+            document.getElementById('b_cont').style.visibility = 'visible';
+            }, 1500);
+        }
+
+        <!-- call update_bars -->
+        update_bar_lengths();
         ex.onclick=function() {
             pop_up_cont.style.display = 'none';
             vol_pop.style.display = 'none';
@@ -46,10 +125,18 @@
         test_vol_button.onclick=function(){
             fb_ref.push({name:'v'+counter, value:'v'});
             counter += 1;
+            var curr_val = parseInt(document.getElementById('v_bar1').innerHTML);
+            count_ref_v.set({value: curr_val + 1});
+            count_ref_t.set({value: total_warning_num + 1});
+            update_bar_lengths();
+
         };
         test_speed_button.onclick=function(){
             fb_ref.push({name:'s'+counter, value:'s'});
             counter += 1;
+            count_ref_s.set({value: speed_warning_num + 1});
+            count_ref_t.set({value: total_warning_num + 1});
+            update_bar_lengths();
         };
         fb_ref.on('child_added', function(snapshot) {
             if (snapshot.val().value =='v') {

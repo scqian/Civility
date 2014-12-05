@@ -22,7 +22,6 @@
         <a href="paused.html"><button id="pause_button"></button></a>
         <button id="test">test v</button>
         <button id="test2">test s</button>
-        <button id="increment_count">count+</button>
     </div>
      <div id="pop_up_cont">
         <img src="Images/volume_pop_up.png" id="volume_p">
@@ -41,23 +40,48 @@
         var speed_pop = document.getElementById('speed_p');
         var ex = document.getElementById('exit');
 
-        <!-- load the previous value -->
-        var count_ref = new Firebase('https://data-storage.firebaseio.com/count');
-        count_ref.on('value', function(snapshot) {
+        <!-- firebase ref -->
+        var count_ref_v = new Firebase('https://data-storage.firebaseio.com/vol_count');
+        var count_ref_s = new Firebase('https://data-storage.firebaseio.com/speed_count');
+        var count_ref_t = new Firebase('https://data-storage.firebaseio.com/total');
+
+        <!-- Set speed count to use -->
+        var speed_warning_num = 0;
+        count_ref_s.on('value', function(snapshot) {
             if (snapshot.val() != null) {
                 var update_val = snapshot.val().value;
                 if (update_val != null) {
-                    count.innerHTML = update_val;
+                    speed_warning_num = update_val;
                 }
             }
         });
 
-        count_button.onclick=function() {
-            var new_val = parseInt(count.innerHTML) + 1;
-            count.innerHTML = new_val;
-            console.log(new_val);
-            count_ref.set({value: new_val});
-        }
+        <!-- set volume count to use-->
+        var vol_warning_num = 0;
+        count_ref_v.on('value', function(snapshot) {
+            if (snapshot.val() != null) {
+                var update_val = snapshot.val().value;
+                if (update_val != null) {
+                    vol_warning_num = update_val;
+                }
+            }
+        });
+
+
+        <!-- load the previous value -->
+        var count_ref = new Firebase('https://data-storage.firebaseio.com/count');
+        var total_warning_num = 0;
+        count_ref_t.on('value', function(snapshot) {
+            if (snapshot.val() != null) {
+                var update_val = snapshot.val().value;
+                if (update_val != null) {
+                    count.innerHTML = update_val;
+                    total_warning_num = update_val;
+                }
+            }
+            document.getElementById('count_container').style.visibility = 'visible';
+        });        
+
         ex.onclick=function() {
             pop_up_cont.style.display = 'none';
             vol_pop.style.display = 'none';
@@ -67,10 +91,15 @@
         test_vol_button.onclick=function(){
             fb_ref.push({name:'v'+counter, value:'v'});
             counter += 1;
+            count_ref_v.set({value: vol_warning_num + 1});
+            count_ref_t.set({value: total_warning_num + 1});
+
         };
         test_speed_button.onclick=function(){
             fb_ref.push({name:'s'+counter, value:'s'});
             counter += 1;
+            count_ref_s.set({value: speed_warning_num + 1});
+            count_ref_t.set({value: total_warning_num + 1});
         };
         fb_ref.on('child_added', function(snapshot) {
             if (snapshot.val().value =='v') {
